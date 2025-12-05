@@ -39,7 +39,7 @@ async def startup_event():
     """Initialize the RAG service on startup"""
     await rag_service.initialize()
 
-@app.post("/upload-pdf", response_model=dict)
+@app.post("/upload-crop-data", response_model=dict)
 async def upload_pdf(file: UploadFile = File(...)):
     """Upload and process PDF file"""
     if not file.filename.endswith('.pdf'):
@@ -67,7 +67,7 @@ async def upload_pdf(file: UploadFile = File(...)):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error processing PDF: {str(e)}")
 
-@app.post("/chat", response_model=ChatResponse)
+@app.post("/ask-consultant", response_model=ChatResponse)
 async def chat(request: ChatRequest):
     """Chat with the RAG system"""
     try:
@@ -76,6 +76,16 @@ async def chat(request: ChatRequest):
     
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error generating response: {str(e)}")
+
+@app.post("/upload-government-schemes", response_model=dict)
+async def upload_government_schemes(file: UploadFile = File(...)):
+    """Upload and process government schemes file"""
+    return {}
+
+@app.post("/query-government-schemes", response_model=ChatResponse)
+async def query_government_schemes(request: ChatRequest):
+    """Query government schemes"""
+    return ChatResponse(response="", sources=[])
 
 @app.get("/health")
 async def health_check():
