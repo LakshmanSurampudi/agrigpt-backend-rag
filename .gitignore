@@ -40,3 +40,7 @@ Thumbs.db
 # Deployment
 .vercel
 .render
+
+# Large files (don't push to git)
+static/images/
+*.pdf

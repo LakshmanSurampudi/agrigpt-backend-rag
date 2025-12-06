@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: rag-chatbot-api
+    name: agrigpt-backend
     env: python
     region: oregon
     plan: free
@@ -14,9 +14,9 @@ services:
       - key: PINECONE_API_KEY
         sync: false
       - key: PINECONE_INDEX
-        sync: false
+        value: agrigpt-backend-rag-index
       - key: PINECONE_CLIP_INDEX
-        sync: false
+        value: agrigpt-backend-rag-clip-index
       - key: PINECONE_CLOUD
         value: aws
       - key: PINECONE_REGION
@@ -24,17 +24,7 @@ services:
       - key: LANGSMITH_API_KEY
         sync: false
       - key: LANGSMITH_TRACING
-        value: true
+        value: "true"
       - key: LANGSMITH_PROJECT
-        value: rag-chatbot
-      # Cloudflare R2 Storage
-      - key: R2_ACCOUNT_ID
-        sync: false
-      - key: R2_ACCESS_KEY_ID
-        sync: false
-      - key: R2_SECRET_ACCESS_KEY
-        sync: false
-      - key: R2_BUCKET_NAME
-        sync: false
-      - key: R2_PUBLIC_URL
-        sync: false
+        value: agrigpt
+
