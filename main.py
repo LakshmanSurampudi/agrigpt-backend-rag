@@ -7,13 +7,14 @@ load_dotenv()
 
 # Import Routers and Services
 from routes.rag_routes import router as rag_router, rag_service
-# from routes.clip_routes import router as clip_router, clip_rag_service
+from routes.clip_ingest_routes import router as clip_ingest_router
+from services.clip_ingest_service import clip_ingest_service
 
 app = FastAPI(title="RAG Chatbot API", version="1.0.0")
 
 # Include Routers
 app.include_router(rag_router)
-# app.include_router(clip_router)
+app.include_router(clip_ingest_router)
 
 # Enable CORS for React frontend
 app.add_middleware(
@@ -26,9 +27,9 @@ app.add_middleware(
 
 @app.on_event("startup")
 async def startup_event():
-    """Initialize the RAG service on startup"""
+    """Initialize services on startup"""
     await rag_service.initialize()
-    # await clip_rag_service.initialize()
+    await clip_ingest_service.initialize()
 
 @app.get("/health")
 async def health_check():

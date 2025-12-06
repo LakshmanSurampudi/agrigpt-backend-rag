@@ -15,6 +15,8 @@ services:
         sync: false
       - key: PINECONE_INDEX
         sync: false
+      - key: PINECONE_CLIP_INDEX
+        sync: false
       - key: PINECONE_CLOUD
         value: aws
       - key: PINECONE_REGION
@@ -25,3 +27,14 @@ services:
         value: true
       - key: LANGSMITH_PROJECT
         value: rag-chatbot
+      # Cloudflare R2 Storage
+      - key: R2_ACCOUNT_ID
+        sync: false
+      - key: R2_ACCESS_KEY_ID
+        sync: false
+      - key: R2_SECRET_ACCESS_KEY
+        sync: false
+      - key: R2_BUCKET_NAME
+        sync: false
+      - key: R2_PUBLIC_URL
+        sync: false

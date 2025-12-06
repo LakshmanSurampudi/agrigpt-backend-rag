@@ -20,6 +20,10 @@ python-multipart
 langsmith
 pydantic
 
-# CLIP Embeddings
-# sentence-transformers
-# langchain-huggingface
+# CLIP Embeddings & Image Processing
+sentence-transformers
+Pillow
+pymupdf
+
+# Cloudflare R2 Storage (S3-compatible)
+boto3
