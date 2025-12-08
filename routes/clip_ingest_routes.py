@@ -135,3 +135,63 @@ async def ask_with_image(
     
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error processing image query: {str(e)}")
+
+
+@router.post("/hybrid-image-query", response_model=ImageQueryResponse)
+async def hybrid_image_query(request: ImageQueryRequest):
+    """
+    Hybrid text-to-image query:
+    1. Converts text query to CLIP embedding
+    2. Searches Pinecone CLIP index for matching images
+    3. Returns images with URLs and metadata
+    
+    Used for queries like "show me images of citrus canker"
+    """
+    try:
+        images = await clip_ingest_service.hybrid_query_images(request.query, request.top_k)
+        
+        return ImageQueryResponse(
+            query=request.query,
+            results=[ImageResult(**img) for img in images],
+            count=len(images)
+        )
+    
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error in hybrid image query: {str(e)}")
+
+
+class ImageSearchResponse(BaseModel):
+    results: List[ImageResult]
+    count: int
+
+
+@router.post("/query-by-image", response_model=ImageSearchResponse)
+async def query_by_image(
+    file: UploadFile = File(...),
+    top_k: int = 5
+):
+    """
+    Image-to-image search:
+    1. Upload an image
+    2. Find similar images in the database using CLIP
+    3. Return matching images with URLs
+    """
+    # Validate file type
+    allowed_extensions = [".jpg", ".jpeg", ".png", ".webp"]
+    file_ext = "." + file.filename.split(".")[-1].lower() if "." in file.filename else ""
+    if file_ext not in allowed_extensions:
+        raise HTTPException(status_code=400, detail="Only image files (JPEG, PNG, WebP) are allowed")
+    
+    try:
+        image_bytes = await file.read()
+        
+        images = await clip_ingest_service.query_images_by_image(image_bytes, top_k)
+        
+        return ImageSearchResponse(
+            results=[ImageResult(**img) for img in images],
+            count=len(images)
+        )
+    
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error in image search: {str(e)}")
+
