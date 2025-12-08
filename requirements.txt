@@ -21,7 +21,7 @@ langsmith
 pydantic
 
 # CLIP Embeddings & Image Processing
-# sentence-transformers
+sentence-transformers
 Pillow
 pymupdf
 
