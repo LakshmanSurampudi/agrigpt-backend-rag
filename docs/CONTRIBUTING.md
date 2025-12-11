@@ -571,6 +571,31 @@ Closes #123
 
 4. **Update documentation** if needed
 
+### Workflow: Addressing Issues
+
+#### External Contributors (Forks)
+
+If you are contributing from a fork (standard for open source contributors):
+
+1. **Claim the Issue**: Comment on the issue you want to work on. Wait for a maintainer to assign it to you or give the go-ahead to avoid duplicate work.
+2. **Fork & Clone**: Fork the repository and clone it locally (see [Development Setup](#development-setup)).
+3. **Create a Branch**: Create a descriptive branch in your fork (e.g., `fix/42-crash-on-startup`).
+4. **Implement**: Make your changes and commit them.
+5. **Sync**: Ensure your branch is up to date with `upstream/main` before pushing.
+6. **Push**: Push the branch to your fork `git push origin fix/42-crash-on-startup`.
+7. **Open PR**: Create a Pull Request from your fork against the `upstream` repository's `main` branch.
+8. **Link Issue**: In the **PR description**, **you must link the issue** using a supported keyword (e.g., `Fixes #42`, `Closes #42`, `Resolves #42`). This ensures the issue is automatically closed when the PR is merged.
+
+- **`Fixes #<issue_number>`**: Indicates that the changes in the PR address and resolve the specified issue.
+- **`Closes #<issue_number>`**: Similar to `Fixes`, this keyword also signifies that the PR's merge will close the linked issue.
+- **`Resolves #<issue_number>`**: Another keyword with the same effect, communicating that the PR provides a solution for the referenced issue.
+
+#### Internal Contributors
+
+1. **Assign Issue**: Assign the relevant issue to yourself on GitHub.
+2. **Branch**: Create a branch directly in the main repository.
+3. **Open PR**: Create a PR and link the issue as described above (e.g., `Fixes #42`).
+
 ### PR Title Format
 
 Use the same format as commit messages:
